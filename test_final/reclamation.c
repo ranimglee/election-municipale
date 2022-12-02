@@ -2,7 +2,7 @@
 #include<string.h>
 #include "reclamation.h"
 #include"stats.h"
-/*#include"user.h"*/
+#include"user.h"
 
 
 /*int ajouter_rec(char * filename, reclamation rec )
@@ -94,8 +94,8 @@
 {
     reclamation rec;
     listelec L;
-    char t[50];
-    int i=0,j,k,n=0;
+    int t[50];
+    int i=0,j,n=0;
     FILE *f=fopen(listeelectorale,"r");                                 
     FILE *f1;
 
@@ -104,17 +104,19 @@
     {
         while(fscanf(f,"%d %d %d %s %s %s %s %s %s %s %d \n",&L.d.j,&L.d.m,&L.d.a,L.nomListe,L.idenTeteliste,L.idenListe,L.candidat1,L.candidat2,L.candidat3,L.numListe,&L.nbV)!=EOF)
         { 
-            t[i]=L.numListe;
+
+            t[i]=atoi(L.numListe);
             i++;
         }
     }
     for(j=0;j<i;j++)
     {
-        printf("%s |",t[j]);
+        printf("%d |",t[j]);
 
     }
     printf("\n");
     fclose(f);
+    
    nb=malloc(i*sizeof(int));
     for(j=0;j<i;j++)
     {
@@ -123,20 +125,19 @@
         while(fscanf(f1,"%s %s %s %s %s %s\n",rec.ident,rec.idNumBV,rec.numlist,rec.type,rec.objet,rec.MsgReclamation)!=EOF)
         {
             
-            if(strcmp(t[j],rec.numlist)==0)
+            if(t[j]==atoi(rec.numlist))
                 n++;
         }
         nb[j]=n;
        
     }
+
 for(j=0;j<i;j++) //affichage
     {
         printf("%d |",nb[j]);
 
     }
-  
-    fclose(f1);
-    
+  fclose(f1);  
     printf("\n");
 }*/
 /**********************************************************+*/
@@ -158,7 +159,7 @@ for(j=0;j<i;j++) //affichage
     return nbr ;
 }*/
 /**********************************************************+*/
-/*user chercher(char * filename, int id)
+user chercher(char * filename, char* id)
 {
     user u ;
     int tr=0;
@@ -167,7 +168,7 @@ for(j=0;j<i;j++) //affichage
     {
         while(tr==0&& fscanf(f,"%s %s %d %d %s %d %d %d %d %s %d %d\n",u.nom,u.prenom,&u.genre,&u.role,u.nationalite,&u.date.j,&u.date.m,&u.date.a,&u.id,u.mdp,&u.ncin,&u.vote)!=EOF)
         {
-            if(u.id== id)
+            if(u.id==atoi(id))
                 tr=1;
         }
     }
@@ -175,9 +176,9 @@ for(j=0;j<i;j++) //affichage
     if(tr==0)
         u.id=-1;
     return u ;
-}*/
+}
 /**********************************************************+*/
-/*int remplir(listelec t[], char * filename)
+int remplir(listelec t[], char * filename)
 {
     reclamation rec;
     listelec L;
@@ -187,7 +188,7 @@ for(j=0;j<i;j++) //affichage
 
     if(f!=NULL)
     {
-        while(fscanf(f,"%d %d %d %s %d %d %d %d %d %d %d \n",&L.d.j,&L.d.m,&L.d.a,L.nomListe,&L.idenTeteliste,&L.idenListe,&L.candidat1,&L.candidat2,&L.candidat3,&L.numListe,&L.nbV)!=EOF)
+        while(fscanf(f,"%d %d %d %s %s %s %s %s %s %s %d \n",&L.d.j,&L.d.m,&L.d.a,L.nomListe,L.idenTeteliste,L.idenListe,L.candidat1,L.candidat2,L.candidat3,L.numListe,&L.nbV)!=EOF)
         { 
             
             t[i]=L;
@@ -196,9 +197,9 @@ for(j=0;j<i;j++) //affichage
     }
     fclose(f);
     return i;
-}*/
+}
 /**********************************************************+*/
-/*void gagnant(user gagnant[], int nbhabitant,listelec t [])
+void gagnant(user gagnant[], int nbhabitant,listelec t [])
 {
     int i,r,q,n=0;
     int nbconseillers=0;
@@ -258,4 +259,4 @@ for(i=0;i<n;i++)
 } 
 
 
-}*/
+}

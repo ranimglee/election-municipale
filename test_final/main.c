@@ -2,7 +2,7 @@
 #include <string.h>
 #include"reclamation.h"
 #include"stats.h"
-/*#include"user.h"*/
+#include"user.h"
 
 int main()
 {
@@ -43,15 +43,15 @@ int main()
     k=nbrtot("reclamation.txt");
     printf("%d",k);*/
     
-    int nb[50];
-    nbreclamation(nb,"reclamation.txt", "liste.txt");
+    /*int nb[50];
+    nbreclamation(nb,"reclamation.txt", "liste.txt");*/
     
     /****************/
-    /*user t[50];
+    user t[50];
     listelec L[50];
     int nbhabitant=5000;
     int x=remplir(L, "liste.txt");
-     gagnant( t, nbhabitant, L);*/
+     gagnant( t, nbhabitant, L);
 
     return 0;
 

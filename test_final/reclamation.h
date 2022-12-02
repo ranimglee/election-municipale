@@ -2,6 +2,9 @@
 #define RECLAMATION_H_INCLUDED
 #include <stdio.h>
 #include<string.h>
+#include"user.h"
+#include"stats.h"
+
 
 
 typedef struct
@@ -22,8 +25,8 @@ int modifier( char * filename, char ident[], reclamation rec1 );*/
 /*int supprimer(char * filename, char ident[]);*/
 /*reclamation chercher(char * filename, char ident[]);*/
 /*int nbrtot(char * filename);*/
-void nbreclamation(int nb[], char * fichierreclamation, char *  listeelectorale);
-/*user chercher(char * filename, int id);
+/*void nbreclamation(int nb[], char * fichierreclamation, char *  listeelectorale);*/
+user chercher(char * filename, char *id);
 int remplir(listelec t[], char * fichierreclamation);
-void gagnant(user gagnant[], int nbhabitant,listelec t []);*/
+void gagnant(user gagnant[], int nbhabitant,listelec t []);
 #endif 
