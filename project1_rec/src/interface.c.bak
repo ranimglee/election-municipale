@@ -362,6 +362,7 @@ create_Liste_reclamation (void)
   GtkWidget *fixed48;
   GtkWidget *chayma_treeview_ls;
   GtkWidget *chayma_entry_ls_numlist;
+  GtkWidget *label300;
   GtkWidget *label297;
   GtkWidget *label302;
   GtkWidget *image146;
@@ -409,7 +410,6 @@ create_Liste_reclamation (void)
   GtkWidget *hbox101;
   GtkWidget *image145;
   GtkWidget *label299;
-  GtkWidget *label300;
 
   Liste_reclamation = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (Liste_reclamation), _("Liste reclamation"));
@@ -417,7 +417,7 @@ create_Liste_reclamation (void)
   fixed48 = gtk_fixed_new ();
   gtk_widget_show (fixed48);
   gtk_container_add (GTK_CONTAINER (Liste_reclamation), fixed48);
-  gtk_widget_set_size_request (fixed48, 904, 640);
+  gtk_widget_set_size_request (fixed48, 0, 0);
 
   chayma_treeview_ls = gtk_tree_view_new ();
   gtk_widget_show (chayma_treeview_ls);
@@ -429,6 +429,11 @@ create_Liste_reclamation (void)
   gtk_fixed_put (GTK_FIXED (fixed48), chayma_entry_ls_numlist, 688, 168);
   gtk_widget_set_size_request (chayma_entry_ls_numlist, 160, 32);
   gtk_entry_set_invisible_char (GTK_ENTRY (chayma_entry_ls_numlist), 8226);
+
+  label300 = gtk_label_new (_("LISTE RECLAMATION"));
+  gtk_widget_show (label300);
+  gtk_fixed_put (GTK_FIXED (fixed48), label300, 368, 8);
+  gtk_widget_set_size_request (label300, 216, 33);
 
   label297 = gtk_label_new ("");
   gtk_widget_show (label297);
@@ -627,11 +632,6 @@ create_Liste_reclamation (void)
   gtk_widget_show (label299);
   gtk_box_pack_start (GTK_BOX (hbox101), label299, FALSE, FALSE, 0);
 
-  label300 = gtk_label_new (_("LISTE RECLAMATION"));
-  gtk_widget_show (label300);
-  gtk_fixed_put (GTK_FIXED (fixed48), label300, 368, 8);
-  gtk_widget_set_size_request (label300, 216, 33);
-
   g_signal_connect ((gpointer) chayma_treeview_ls, "row_activated",
                     G_CALLBACK (on_chayma_treeview_row_activated),
                     NULL);
@@ -674,6 +674,7 @@ create_Liste_reclamation (void)
   GLADE_HOOKUP_OBJECT (Liste_reclamation, fixed48, "fixed48");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, chayma_treeview_ls, "chayma_treeview_ls");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, chayma_entry_ls_numlist, "chayma_entry_ls_numlist");
+  GLADE_HOOKUP_OBJECT (Liste_reclamation, label300, "label300");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, label297, "label297");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, label302, "label302");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, image146, "image146");
@@ -719,7 +720,6 @@ create_Liste_reclamation (void)
   GLADE_HOOKUP_OBJECT (Liste_reclamation, hbox101, "hbox101");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, image145, "image145");
   GLADE_HOOKUP_OBJECT (Liste_reclamation, label299, "label299");
-  GLADE_HOOKUP_OBJECT (Liste_reclamation, label300, "label300");
 
   return Liste_reclamation;
 }

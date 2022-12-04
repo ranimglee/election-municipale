@@ -11,7 +11,8 @@ project1_SOURCES = \
 	main.c \
 	support.c support.h \
 	interface.c interface.h \
-	callbacks.c callbacks.h
+	callbacks.c callbacks.h \
+	reclamation.c reclamation.h
 
 project1_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 
