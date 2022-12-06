@@ -1,7 +1,0 @@
-79 5 2 pratique exclu textreclamation1
-64 4 2 theorique bruit textreclamation2
-12 4 3 theorique test textreclamation3
-64 4 2 theorique bruit textreclamation2
-12 4 1 theorique test textreclamation3
-79 5 1 pratique exclu textreclamation1
-79 5 4 pratique exclu textreclamation1
