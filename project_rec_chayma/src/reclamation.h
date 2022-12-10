@@ -13,14 +13,25 @@ typedef struct
     char MsgReclamation [100];
 } reclamation;
 
+enum
+{ 
+	IDENT,
+	IDNUMBV,
+	NUMLIST,
+	TYPE,
+	ETAT,
+	MSG,
+	COLUMNS
+};
 
 
 void ajouter_rec(reclamation rec);
-void vider(GtkWidget *liste);
+//void vider(GtkWidget *liste);
 int supprimer_reclamation( char IDENT_LIST[]);
 reclamation chayma_remplir_champ(char fich[], char id[]);
 int modifier_rec(reclamation rec , char ident[]);
-void recher_rec(reclamation rec , char ident[], int *ok);
+//void recher_rec(reclamation rec , char ident[], int *ok);
+int Chercher_reclamation(GtkWidget *liste,char*filename,char*ident);
 void afficher(GtkWidget *liste, char *filename);
 /*
 int nbrtot(char * filename);

@@ -11,16 +11,6 @@
 #include "reclamation.h"
 #include <gtk/gtk.h>
 
-enum
-{ 
-	IDENT,
-	IDNUMBV,
-	NUMLIST,
-	TYPE,
-	ETAT,
-	MSG,
-	COLUMNS
-};
 
 /******************************************************/
 void ajouter_rec(reclamation rec)
@@ -98,25 +88,31 @@ int supprimer_reclamation( char IDENT_LIST[])
 return tr;
 }
 /************************************************************/
-reclamation chayma_remplir_champ(char fich[], char id[]){
+reclamation chayma_remplir_champ(char fich[], char id[])
+{
 
  	FILE *f=NULL;
-    reclamation rec;
+    reclamation rec,Err;
     f = fopen(fich,"r");
     if (f!=NULL)
     {
 
-    while (fscanf(f,"%s %d %s %s %s %s\n",rec.ident,&rec.idNumBV,rec.numlist,rec.type,rec.etat,rec.MsgReclamation)!=EOF){
-		if (strcmp(rec.ident,id)==0){
- 		fclose(f);
+    while (fscanf(f,"%s %d %s %s %s %s\n",rec.ident,&rec.idNumBV,rec.numlist,rec.type,rec.etat,rec.MsgReclamation)!=EOF)
+		{if (strcmp(rec.ident,id)==0)
 		return rec;
-		};
+		}
+fclose(f);
+
 }
-    }
- 	fclose(f);
+
+		
+
+   strcpy(Err.numlist,"");
+return Err;
+ 	
 }
 /***************************************************************************/
-void chercher_rec(GtkWidget *liste, char ident[30])
+/*void chercher_rec(GtkWidget *liste, char ident[30])
 {
 
 	reclamation rec;
@@ -179,7 +175,72 @@ if(strcmp(rec.ident,ident)==0)
        g_object_unref(store);
    }
 
+}*/
+/************************************************************/
+int Chercher_reclamation(GtkWidget *liste,char*filename,char*ident)
+{
+reclamation rec;
+GtkCellRenderer *renderer;
+GtkTreeViewColumn *column;
+GtkTreeIter iter;
+GtkListStore *store;
+store = NULL;
+FILE *f;
+int nb=0;
+store = gtk_tree_view_get_model(liste);
+	if (store == NULL)
+{
+	renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("ident",renderer,"text", IDENT,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+ 
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("idNumBV",renderer,"text",IDNUMBV,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+ 
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("numlist",renderer,"text",NUMLIST,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+ 
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("type",renderer,"text",TYPE,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+ 
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("etat",renderer,"text",ETAT,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+ 
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes("MsgReclamation",renderer,"Text",MSG,NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(liste),column);
+
+	
 }
+gtk_list_store_set(store, &iter, IDENT, rec.ident, IDNUMBV, &rec.idNumBV,NUMLIST, rec.numlist, TYPE, rec.type,  ETAT, rec.etat, MSG, rec.MsgReclamation,-1);
+
+	    f=fopen(filename,"r");
+	    if(f==NULL)
+	    {
+	          return;
+	    }
+
+	    else
+	    {  
+			f=fopen(filename,"a+");
+			while(fscanf(f,"%s %d %s %s %s %s \n",rec.ident,&rec.idNumBV,rec.numlist,rec.type,rec.etat,rec.MsgReclamation)!=EOF)
+			{ if (strcmp(ident,rec.numlist)==0)
+				{ nb++;
+				gtk_list_store_set(store, &iter, IDENT, rec.ident, IDNUMBV, &rec.idNumBV,NUMLIST, rec.numlist, TYPE, rec.type,  ETAT, rec.etat, MSG, rec.MsgReclamation,-1);
+
+				}
+			}
+			fclose(f);
+			gtk_tree_view_set_model (GTK_TREE_VIEW (liste), GTK_TREE_MODEL (store));
+			g_object_unref (store);
+	   } 
+return nb;
+}
+
 /************************************************************/
 /*void vider(GtkWidget *liste)
 {

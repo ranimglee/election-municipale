@@ -8,9 +8,10 @@
 #include "interface.h"
 #include "support.h"
 int chayma_edit=0;
+int chayma_focus_affichage=0;
 char Numlist[20]="";
 int chayma_accept=0;
-int chayma_sup_oui_non=0;
+int chayma_sup_oui_non=1;
 char chayma_identifiant[50]="";
 int chayma_tree_view=0;
 
@@ -19,6 +20,38 @@ on_modier_reclamation_focus_in_event   (GtkWidget       *widget,
                                         GdkEventFocus   *event,
                                         gpointer         user_data)
 {
+
+
+ if (chayma_edit==0){
+GtkWidget *inpute1, *inpute2, *inpute3, *inpute4, *inpute5,*inpute6; 
+
+reclamation rec; 
+chayma_focus_affichage = 0;
+ 
+inpute1=lookup_widget(widget,"chayma_entry_mdf_id");
+inpute2=lookup_widget(widget,"chayma_spinbutton_mdf_NumBV");
+inpute3=lookup_widget(widget,"chayma_entry_mdf_listelec");
+inpute4=lookup_widget(widget,"chayma_combobox_mdf_type");
+inpute5=lookup_widget(widget,"chayma_combobox_mdf_etat");
+inpute6=lookup_widget(widget,"chayma_entry_mdf_msg");
+//char id[40];
+//chayma_sup_oui_non=1;
+if (strcmp(Numlist,"")!=0)
+{
+rec = chayma_remplir_champ("reclamation.txt",Numlist);
+
+gtk_entry_set_text(GTK_ENTRY(inpute1),rec.ident);
+gtk_spin_button_set_value(inpute2,rec.idNumBV);
+gtk_entry_set_text(GTK_ENTRY(inpute3),rec.numlist);
+gtk_combo_box_set_active (GTK_COMBO_BOX(inpute4), rec.type);
+gtk_combo_box_set_active (GTK_COMBO_BOX(inpute5), rec.etat);
+gtk_entry_set_text(GTK_ENTRY(inpute6),rec.MsgReclamation);
+
+}
+}
+strcmp(chayma_identifiant,"");
+chayma_edit=1;
+
 
   return FALSE;
 }
@@ -122,6 +155,21 @@ on_Liste_reclamation_focus_in_event    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 
+
+if(chayma_edit==0)
+{
+chayma_focus_affichage=0;
+GtkWidget *tree;
+tree=lookup_widget(widget,"chayma_treeview_ls");
+afficher(tree,"reclamation.txt");
+chayma_edit==1;
+
+}
+
+
+
+
+
   return FALSE;
 }
 
@@ -139,7 +187,7 @@ gchar *numlist;
 GtkTreeModel *model = gtk_tree_view_get_model(treeview);
 
 if (gtk_tree_model_get_iter(model,&iter,path)){
-gtk_tree_model_get(GTK_LIST_STORE(model),&iter,0 , &numlist ,-1);
+gtk_tree_model_get(GTK_LIST_STORE(model),&iter, NUMLIST, &numlist ,-1);
 strcpy(Numlist,numlist); 
 chayma_edit = 0;
 }
@@ -161,7 +209,31 @@ void
 on_chayma_button_ls_recherche_clicked  (GtkButton       *button,
                                         gpointer         user_data)
 {
+GtkWidget *r1;
+GtkWidget *entry, *label;
+GtkWidget *message;
+//char ident[20];
+//char chnb[20];
+int b,nb;  
+entry=lookup_widget(button,"chayma_entry_ls_numlist");
+//label=lookup_widget(button,"ibti_msg_cher");
+r1=lookup_widget(button,"chayma_treeview_ls");
+strcpy(Numlist,gtk_entry_get_text(GTK_ENTRY(entry)));
+if(strcmp(Numlist,"")==0){
+  b=0;
+}else{
+b=1;
+}
 
+if(b==0)
+    {return;
+    }
+    else
+    {
+
+nb=Chercher_reclamation(r1,"reclamation.txt",Numlist);
+
+}
 }
 
 
@@ -446,7 +518,7 @@ on_chayma_radiobutton_sup_rec_toggled  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton))){
-		chayma_sup_oui_non=1;
+		chayma_sup_oui_non=0;
 	}
 }
 
@@ -456,7 +528,7 @@ on_chayma_radiobutton_sup_non_toggled  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton))){
-		chayma_sup_oui_non=0;
+		chayma_sup_oui_non=1;
 	}
 }
 
@@ -471,12 +543,12 @@ on_chayma_button_conf_suprec_clicked   (GtkButton       *button,
 void
 on_chayma_button_conf_suprec_clicked   (GtkButton       *button,
                                         gpointer         user_data)
-{
-//GtkWidget *pInfo ;
-//reclamation rec;
-//if ( chayma_sup_oui_non==1)
-int tr=supprimer_reclamation(Numlist);
-/*	if (tr==0)
+{chayma_focus_affichage=0;
+GtkWidget *pInfo ;
+reclamation rec;
+if ( chayma_sup_oui_non==1)
+{int tr=supprimer_reclamation(Numlist);
+	if (tr==0)
 	{
 	 	pInfo=gtk_message_dialog_new(GTK_WINDOW(user_data),GTK_DIALOG_MODAL,GTK_MESSAGE_INFO,GTK_BUTTONS_OK,"SUPPRESSION EFFECTUÉ");
 		switch(gtk_dialog_run(GTK_DIALOG(pInfo)))
@@ -487,7 +559,7 @@ int tr=supprimer_reclamation(Numlist);
 			
 			gtk_widget_destroy(pInfo);
 
-		*/
+		
 		GtkWidget *chayma_reclamation ,*treeview_aff, *chayma_supp_confirmer , *w3;
 			
 		
@@ -500,7 +572,7 @@ int tr=supprimer_reclamation(Numlist);
 		gtk_widget_show(chayma_reclamation);
 
 		afficher(treeview_aff,"reclamation.txt") ;
-	/*	}
+		}
 		}
 		}
 }
@@ -520,8 +592,9 @@ else
 		gtk_widget_show(chayma_reclamation);
 
 		afficher(treeview_aff,"reclamation.txt") ;
+		chayma_sup_oui_non==1;
 		}}
 
-}*/
+}
 }
 

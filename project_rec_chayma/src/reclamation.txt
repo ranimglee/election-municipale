@@ -1,11 +1,4 @@
-79 5 3 pratique Urgent textreclamation1
-12 4 1 theorique Urgent textreclamation3
-12 4 1 theorique Normal textreclamation3
 12 4 2 theorique Normal textreclamation3
-12 4 3 theorique Normal textreclamation3
-chayma 3 4 pratique Urgent wffef
-56 3 7 theorique Normal ljjhgfxdcv
-65 1 6 theorique Urgent lf
-123 2 4 pratique Urgent oihouiyufjkmn
 67 2 5 pratique Urgent tfgbhnj
-65 2 6 theorique Normal fgh
+54 1 5 pratique  Normal rgtvfd
+68 3 6 pratique  Normal yhtgf
